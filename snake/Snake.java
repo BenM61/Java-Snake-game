@@ -15,11 +15,11 @@ public class Snake {
 	private LinkedList<Coor> body; //snake's body
 	private Set<Coor> emptySpaces; //valid spots for food- spots without snake parts
 	private boolean dead;
-	private Image img; //img of other body parts
+	private Image img; //img of snake body parts
 	
 	/*
-	 * @pre: Game.WIDTH - Game.BLOCK_SIZE % 2 == 0
-	 * @pre: Game.HEIGHT - Game.BLOCK_SIZE % 2 == 0
+	 * @pre: Game.HEIGHT / Game.BLOCK_SIZE == 0 && Game.WIDTH / Game.BLOCK_SIZE == 0
+	 * @pre: Game.HEIGHT % 2 == 0
 	 * @pre: Game.WIDTH > 3 * Game.BLOCK_SIZE
 	 * @post: the snake starts at the middle of the screen
 	*/
