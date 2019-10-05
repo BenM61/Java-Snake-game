@@ -31,10 +31,10 @@ public class Coor { //coordinates
 	
 	@Override
 	public boolean equals(Object o) {
-		Coor c = (Coor) o;
-		if (x == c.getX() && y == c.getY()) {
-			return true;
+		if (o == null || !(o instanceof Coor)){
+			return false;
 		}
-		return false;
+		Coor c = (Coor) o;
+		return x == c.getX() && y == c.getY();
 	}
 }
