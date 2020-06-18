@@ -33,7 +33,7 @@ public class Food {
 	}
 	
 	private void initializeImages() {
-		ImageIcon icon = new ImageIcon("src/res/food.png");
+		ImageIcon icon = new ImageIcon("res/food.png");
 		img = icon.getImage();
 	}
 	
