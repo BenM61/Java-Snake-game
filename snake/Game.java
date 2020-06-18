@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
@@ -21,13 +19,15 @@ public class Game extends Canvas implements Runnable{
 	private boolean running;
 	private Snake snake;
 	private Food food;
+	private KeyboardAdapter kba;
 
 	public Game(){
 		initializeWindow();
 		snake = new Snake(this);
 		food = new Food();
 		food.generateLocation(snake.getCopyOfEmptySpaces());
-		initializeKeyAdapter();
+		kba = new KeyboardAdapter(snake);
+		this.addKeyListener(kba);
 		start();
 	}
 
@@ -39,7 +39,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void run() {
-		double amountOfTicks = 10d; //ticks amount per second
+		double amountOfTicks = 12d; //ticks amount per second
 		double nsBetweenTicks = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long lastTime = System.nanoTime();
@@ -56,6 +56,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void tick() {
+		kba.resetHasBeenPressed();
 		if (snake.isDead()) {
 			running = false;
 		}
@@ -102,44 +103,6 @@ public class Game extends Canvas implements Runnable{
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		return frame;
-	}
-	
-	private void initializeKeyAdapter() { 
-		//this is how to game gets keyboard input 
-		//the controls are wasd keys
-		class MyKeyAdapter extends KeyAdapter{
-			private int velocity = Snake.DEFAULT_SPEED; //move a whole block at a time
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ESCAPE) {
-					System.exit(0);
-				}
-				//after a key has been pressed we check if the snake goes the opposite way
-				//if so, we ignore the press
-				if (key == KeyEvent.VK_S) {
-					if (snake.getVelY() != -velocity) {
-						snake.setVel(0, velocity);
-					}
-				}
-				else if (key == KeyEvent.VK_W) {
-					if (snake.getVelY() != velocity) {
-						snake.setVel(0, -velocity);
-					}
-				}
-				else if (key == KeyEvent.VK_D) {
-					if (snake.getVelX() != -velocity) {
-						snake.setVel(velocity, 0);
-					}
-				}
-				else if (key == KeyEvent.VK_A) {
-					if (snake.getVelX() != velocity) {
-						snake.setVel(-velocity, 0);
-					}
-				}
-			}
-		}
-		this.addKeyListener(new MyKeyAdapter()); //adding it to the game
 	}
 	
 	public static void main(String[] args) {
