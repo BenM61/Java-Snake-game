@@ -116,7 +116,7 @@ public class Snake {
 	}
 	
 	private void initializeImage() {
-		ImageIcon icon = new ImageIcon("src/res/snake.png");
+		ImageIcon icon = new ImageIcon("res/snake.png");
 		img = icon.getImage();
 	}
 	
